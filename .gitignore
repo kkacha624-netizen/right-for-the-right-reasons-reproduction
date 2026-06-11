@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Data
+data/
+datasets/
+
+# Model weights
+checkpoints/
+*.pth
+*.pt
+*.pkl
+*.ckpt
+
+# Outputs
+outputs/
+runs/
+wandb/
+mlruns/
+
+# OS / Editor
+.DS_Store
+.vscode/
