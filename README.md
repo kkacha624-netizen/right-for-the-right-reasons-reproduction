@@ -95,7 +95,8 @@ right-for-the-right-reasons-reproduction/
 │  ├─ run_decoy_mnist.py
 │  ├─ run_newsgroups.py
 │  ├─ run_diabetes.py
-│  └─ reproduce_all.py
+│  ├─ reproduce_all.py
+│  └─ setup_cuda123.ps1
 │
 ├─ experiments/
 │  ├─ synthetic/
@@ -185,6 +186,21 @@ source .venv/bin/activate
 
 ```bash
 uv sync
+```
+
+### CUDA 12.3 の GPU を使用する場合
+
+CUDA 12.3 対応 GPU で PyTorch を使う場合は、通常の依存関係に加えて以下を実行する。
+PyTorch には `cu123` という専用 wheel はないため、CUDA 12.3 対応 NVIDIA ドライバで動作する CUDA 12 系 wheel として `torch==2.5.1` / `torchvision==0.20.1` の `cu121` を使用する。
+
+```powershell
+.\scripts\setup_cuda123.ps1
+```
+
+CUDA が認識されているかは以下で確認する。
+
+```powershell
+.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"
 ```
 
 ---
