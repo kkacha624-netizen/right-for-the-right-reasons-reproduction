@@ -1,19 +1,41 @@
 {
   "baseline": {
-    "accuracy": 0.5,
-    "classification_loss": 0.6981890201568604,
+    "accuracy": 0.5233333333333333,
+    "classification_loss": 0.6856774091720581,
     "explanation_regularization_loss": 0.0,
-    "loss": 0.6913243738810221
+    "loss": 0.693385124206543
   },
   "batch_size": 256,
   "device": "cpu",
   "epochs": 3,
   "experiment_id": "toy_color",
+  "extra_eval": {
+    "baseline_rule_gradients": {
+      "corner_fraction": 0.1502368249026143,
+      "top_middle_fraction": 0.13443235137770787
+    },
+    "rrr_rule_gradients": {
+      "corner_fraction": 0.13940656951478608,
+      "top_middle_fraction": 0.12911060703313412
+    }
+  },
   "lambda_rrr": 1000.0,
+  "reproduction_checks": {
+    "rrr_high_accuracy": false,
+    "rrr_suppresses_corners_vs_baseline": true,
+    "rrr_uses_top_middle_more_than_baseline": false
+  },
   "rrr": {
-    "accuracy": 0.5466666666666666,
-    "classification_loss": 0.6819205284118652,
-    "explanation_regularization_loss": 0.0010447849053889513,
-    "loss": 0.6896872075398763
-  }
+    "accuracy": 0.4766666666666667,
+    "classification_loss": 0.690544605255127,
+    "explanation_regularization_loss": 1.6804374354251195e-06,
+    "loss": 0.6947505124409994
+  },
+  "sample_images": [
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_00.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_01.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_02.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_03.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_04.png"
+  ]
 }

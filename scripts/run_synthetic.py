@@ -1,8 +1,35 @@
 from __future__ import annotations
 
-from _runner import common_parser, run_pair
+import numpy as np
+import torch
+from torch.utils.data import DataLoader
+
+from _runner import ROOT, common_parser, run_pair
 from datasets.toy_color import make_toy_color
-from rrr.utils import get_device, set_seed
+from rrr.gradients import probability_input_gradients
+from rrr.utils import get_device, set_seed, write_json
+from rrr.visualize import save_dataset_sample_images
+
+
+def _rule_gradient_fractions(model, dataset, device, batch_size: int) -> dict[str, float]:
+    corner_idx = []
+    top_idx = []
+    for row, col in [(0, 0), (0, 4), (4, 0), (4, 4)]:
+        corner_idx.extend([(row * 5 + col) * 3 + channel for channel in range(3)])
+    for row, col in [(0, 1), (0, 2), (0, 3)]:
+        top_idx.extend([(row * 5 + col) * 3 + channel for channel in range(3)])
+    total = 0.0
+    corner = 0.0
+    top = 0.0
+    for batch in DataLoader(dataset, batch_size=batch_size):
+        grads = probability_input_gradients(model.to(device), batch[0].to(device)).abs().cpu()
+        total += float(grads.sum())
+        corner += float(grads[:, corner_idx].sum())
+        top += float(grads[:, top_idx].sum())
+    return {
+        "corner_fraction": corner / max(total, 1e-12),
+        "top_middle_fraction": top / max(total, 1e-12),
+    }
 
 
 def main() -> dict:
@@ -11,18 +38,46 @@ def main() -> dict:
     set_seed(args.seed)
     n_train, n_test = (800, 300) if args.quick else (5000, 2000)
     epochs = args.epochs or (3 if args.quick else 30)
-    train_ds, test_ds, input_dim, output_dim = make_toy_color(args.seed, n_train, n_test)
-    return run_pair(
+    train_ds, test_ds, input_dim, output_dim = make_toy_color(args.seed, n_train, n_test, mask_mode="corners")
+    sample_images = save_dataset_sample_images(
+        ROOT / "results" / "figures" / "samples" / "toy_color",
+        [train_ds[i][0].reshape(5, 5, 3).numpy() for i in range(5)],
+        [f"Toy Color sample {i} / y={int(train_ds[i][1])}" for i in range(5)],
+    )
+    device = get_device(args.device)
+
+    def extra_eval(baseline, rrr):
+        return {
+            "baseline_rule_gradients": _rule_gradient_fractions(baseline, test_ds, device, args.batch_size),
+            "rrr_rule_gradients": _rule_gradient_fractions(rrr, test_ds, device, args.batch_size),
+        }
+
+    result = run_pair(
         experiment="toy_color",
         train_ds=train_ds,
         test_ds=test_ds,
         input_dim=input_dim,
         output_dim=output_dim,
-        device=get_device(args.device),
+        device=device,
         epochs=epochs,
         batch_size=args.batch_size,
         lambda_rrr=args.lambda_rrr,
+        extra_eval=extra_eval,
     )
+    result["sample_images"] = sample_images
+    result["reproduction_checks"] = {
+        "rrr_high_accuracy": result["rrr"]["accuracy"] >= 0.90,
+        "rrr_uses_top_middle_more_than_baseline": (
+            result["extra_eval"]["rrr_rule_gradients"]["top_middle_fraction"]
+            > result["extra_eval"]["baseline_rule_gradients"]["top_middle_fraction"]
+        ),
+        "rrr_suppresses_corners_vs_baseline": (
+            result["extra_eval"]["rrr_rule_gradients"]["corner_fraction"]
+            < result["extra_eval"]["baseline_rule_gradients"]["corner_fraction"]
+        ),
+    }
+    write_json(ROOT / "experiments" / "toy_color" / "metrics.json", result)
+    return result
 
 
 if __name__ == "__main__":

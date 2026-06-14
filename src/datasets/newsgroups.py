@@ -23,18 +23,20 @@ def make_newsgroups(
     seed: int = 0,
     max_features: int = 5000,
     forbidden_words: list[str] | None = None,
+    remove_metadata: bool = False,
 ) -> tuple[TensorDataset, TensorDataset, int, int, list[str]]:
     categories = ["alt.atheism", "soc.religion.christian"]
+    remove = ("headers", "footers", "quotes") if remove_metadata else ()
     train = fetch_20newsgroups(
         subset="train",
         categories=categories,
-        remove=("headers", "footers", "quotes"),
+        remove=remove,
         random_state=seed,
     )
     test = fetch_20newsgroups(
         subset="test",
         categories=categories,
-        remove=("headers", "footers", "quotes"),
+        remove=remove,
         random_state=seed,
     )
     vectorizer = TfidfVectorizer(stop_words="english", max_features=max_features)

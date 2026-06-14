@@ -1,19 +1,43 @@
 {
   "baseline": {
-    "accuracy": 0.5550906555090656,
-    "classification_loss": 0.6999860405921936,
+    "accuracy": 0.5760111576011158,
+    "classification_loss": 0.6838384866714478,
     "explanation_regularization_loss": 0.0,
-    "loss": 0.676691137763413
+    "loss": 0.6609340651763533
   },
   "batch_size": 256,
   "device": "cpu",
   "epochs": 3,
   "experiment_id": "newsgroups",
   "lambda_rrr": 1000.0,
+  "paper_targets": {
+    "baseline_accuracy": 0.94,
+    "tfidf_components": 5000
+  },
+  "preprocessing": {
+    "categories": [
+      "alt.atheism",
+      "soc.religion.christian"
+    ],
+    "max_features": 1000,
+    "remove_metadata": false
+  },
+  "reproduction_checks": {
+    "baseline_close_to_paper_94_percent": false,
+    "rrr_retains_reasonable_accuracy": true,
+    "uses_5000_tfidf_components": false
+  },
   "rrr": {
     "accuracy": 0.5550906555090656,
-    "classification_loss": 0.6971749067306519,
-    "explanation_regularization_loss": 1.6965395843726583e-06,
-    "loss": 0.6876476293162156
-  }
+    "classification_loss": 0.6902007460594177,
+    "explanation_regularization_loss": 4.085323439539934e-07,
+    "loss": 0.6817465001402873
+  },
+  "sample_images": [
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\newsgroups\\sample_00.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\newsgroups\\sample_01.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\newsgroups\\sample_02.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\newsgroups\\sample_03.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\newsgroups\\sample_04.png"
+  ]
 }

@@ -8,13 +8,17 @@ def log_prob_input_gradients(
     model: torch.nn.Module,
     inputs: torch.Tensor,
     targets: torch.Tensor | None = None,
+    sum_classes: bool = True,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     x = inputs.detach().clone().requires_grad_(True)
     logits = model(x)
     log_probs = F.log_softmax(logits, dim=1)
-    if targets is None:
-        targets = logits.argmax(dim=1)
-    selected = log_probs.gather(1, targets.view(-1, 1)).sum()
+    if sum_classes:
+        selected = log_probs.sum()
+    else:
+        if targets is None:
+            targets = logits.argmax(dim=1)
+        selected = log_probs.gather(1, targets.view(-1, 1)).sum()
     gradients = torch.autograd.grad(selected, x, create_graph=True)[0]
     return gradients, logits
 

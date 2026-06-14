@@ -37,6 +37,9 @@ def main() -> int:
         sys.argv.extend(["--device", args.device])
         try:
             result = importlib.import_module(module_name).main()
+            checks = result.get("reproduction_checks", {})
+            status = "reproduced" if checks and all(bool(value) for value in checks.values()) else "partial"
+            notes = "; ".join(f"{key}={value}" for key, value in checks.items())
             if "history" in result:
                 rows.append(
                     {
@@ -45,8 +48,8 @@ def main() -> int:
                         "method": "iterative_rrr",
                         "metric": "accuracy",
                         "reproduced_result": result["history"][-1]["accuracy"],
-                        "status": "completed",
-                        "notes": "final round",
+                        "status": status,
+                        "notes": notes or "final round",
                     }
                 )
             else:
@@ -58,9 +61,32 @@ def main() -> int:
                             "method": method,
                             "metric": "accuracy",
                             "reproduced_result": result[method]["accuracy"],
-                            "status": "completed",
-                            "notes": "",
+                            "status": status,
+                            "notes": notes,
                         }
+                    )
+                if dataset == "decoy_mnist" and "extra_eval" in result:
+                    rows.extend(
+                        [
+                            {
+                                "experiment_id": result["experiment_id"],
+                                "dataset": dataset,
+                                "method": "baseline",
+                                "metric": "random_swatch_accuracy",
+                                "reproduced_result": result["extra_eval"]["baseline_random_swatch"]["accuracy"],
+                                "status": status,
+                                "notes": notes,
+                            },
+                            {
+                                "experiment_id": result["experiment_id"],
+                                "dataset": dataset,
+                                "method": "rrr",
+                                "metric": "random_swatch_accuracy",
+                                "reproduced_result": result["extra_eval"]["rrr_random_swatch"]["accuracy"],
+                                "status": status,
+                                "notes": notes,
+                            },
+                        ]
                     )
         except Exception as exc:
             failures.append((dataset, repr(exc)))

@@ -311,6 +311,33 @@ python scripts/run_diabetes.py
 python scripts/reproduce_all.py
 ```
 
+Google Colab で `test` ブランチを使って実行する場合は以下を使う。
+
+```python
+!git clone -b test https://github.com/kkacha624-netizen/right-for-the-right-reasons-reproduction.git
+%cd right-for-the-right-reasons-reproduction
+!pip install -r requirements.txt
+!python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.version.cuda)"
+!python scripts/reproduce_all.py --device cuda
+```
+
+短時間の動作確認だけを行う場合は `--quick` を付ける。
+
+```python
+!python scripts/reproduce_all.py --quick --device cuda
+```
+
+各実験を個別に実行する場合は以下を使う。
+
+```python
+!python scripts/run_synthetic.py --device cuda
+!python scripts/run_decoy_mnist.py --device cuda
+!python scripts/run_newsgroups.py --device cuda
+!python scripts/run_diabetes.py --device cuda
+!python scripts/run_unsupervised.py --device cuda
+!python scripts/visualize_explanations.py --device cuda
+```
+
 実験結果は以下に保存する。
 
 ```text
@@ -318,6 +345,26 @@ results/
 ├─ figures/
 ├─ tables/
 └─ logs/
+```
+
+各データセットのサンプル画像は以下に 5 枚ずつ保存する。
+
+```text
+results/figures/samples/toy_color/
+results/figures/samples/decoy_mnist/
+results/figures/samples/newsgroups/
+results/figures/samples/iris_cancer/
+```
+
+Toy Color と Decoy MNIST は入力画像そのものを保存する。
+20 Newsgroups は文書テキストを画像化し、Iris-Cancer は特徴量 bar plot として保存する。
+
+結果を Colab から回収する場合は以下を使う。
+
+```python
+!zip -r results.zip results experiments
+from google.colab import files
+files.download("results.zip")
 ```
 
 ---
