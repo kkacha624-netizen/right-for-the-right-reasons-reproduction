@@ -362,7 +362,7 @@ Toy Color と Decoy MNIST は入力画像そのものを保存する。
 結果を Colab から回収する場合は以下を使う。
 
 ```python
-!zip -r results.zip results experiments
+!python scripts/package_results.py --output results.zip
 from google.colab import files
 files.download("results.zip")
 ```

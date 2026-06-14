@@ -34,6 +34,7 @@ def _rule_gradient_fractions(model, dataset, device, batch_size: int) -> dict[st
 
 def main() -> dict:
     parser = common_parser()
+    parser.set_defaults(lambda_rrr=100.0)
     args = parser.parse_args()
     set_seed(args.seed)
     n_train, n_test = (800, 300) if args.quick else (5000, 2000)

@@ -7,7 +7,7 @@ from datasets.decoy_mnist import make_decoy_mnist
 from rrr.evaluate import evaluate
 from rrr.gradients import probability_input_gradients
 from rrr.utils import get_device, set_seed, write_json
-from rrr.visualize import save_dataset_sample_images
+from rrr.visualize import save_dataset_sample_images, save_image_grid
 
 
 def _swatch_gradient_fraction(model, dataset, device, batch_size: int) -> float:
@@ -19,6 +19,33 @@ def _swatch_gradient_fraction(model, dataset, device, batch_size: int) -> float:
         masked += float((grads * mask).sum().detach().cpu())
         total += float(grads.sum().detach().cpu())
     return masked / max(total, 1e-12)
+
+
+def _save_gradient_examples(baseline, rrr, dataset, device) -> list[str]:
+    paths: list[str] = []
+    for idx in range(5):
+        x, y, mask = dataset[idx]
+        batch = x.unsqueeze(0).to(device)
+        baseline_grad = probability_input_gradients(baseline.to(device), batch).cpu().squeeze(0).squeeze(0).numpy()
+        rrr_grad = probability_input_gradients(rrr.to(device), batch).cpu().squeeze(0).squeeze(0).numpy()
+        path = ROOT / "results" / "figures" / "explanations" / "decoy_mnist" / f"sample_{idx:02d}.png"
+        save_image_grid(
+            path,
+            [
+                x.squeeze(0).numpy(),
+                mask.squeeze(0).numpy(),
+                abs(baseline_grad),
+                abs(rrr_grad),
+            ],
+            [
+                f"input y={int(y)}",
+                "swatch mask",
+                "baseline gradient",
+                "rrr gradient",
+            ],
+        )
+        paths.append(str(path))
+    return paths
 
 
 def main() -> dict:
@@ -54,6 +81,7 @@ def main() -> dict:
                 baseline, test_random_ds, device, args.batch_size
             ),
             "rrr_swatch_gradient_fraction": _swatch_gradient_fraction(rrr, test_random_ds, device, args.batch_size),
+            "gradient_figures": _save_gradient_examples(baseline, rrr, test_random_ds, device),
         }
 
     result = run_pair(
