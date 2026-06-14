@@ -7,7 +7,7 @@ __pycache__/
 
 # Data
 data/
-datasets/
+/datasets/
 
 # Model weights
 checkpoints/

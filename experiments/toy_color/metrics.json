@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "accuracy": 0.5,
+    "classification_loss": 0.6981890201568604,
+    "explanation_regularization_loss": 0.0,
+    "loss": 0.6913243738810221
+  },
+  "batch_size": 256,
+  "device": "cpu",
+  "epochs": 3,
+  "experiment_id": "toy_color",
+  "lambda_rrr": 1000.0,
+  "rrr": {
+    "accuracy": 0.5466666666666666,
+    "classification_loss": 0.6819205284118652,
+    "explanation_regularization_loss": 0.0010447849053889513,
+    "loss": 0.6896872075398763
+  }
+}

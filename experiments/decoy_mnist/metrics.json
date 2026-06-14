@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "accuracy": 0.545,
+    "classification_loss": 2.0200812816619873,
+    "explanation_regularization_loss": 0.0,
+    "loss": 1.9596805725097657
+  },
+  "batch_size": 256,
+  "device": "cpu",
+  "epochs": 1,
+  "experiment_id": "decoy_mnist",
+  "extra_eval": {
+    "baseline_random_swatch": {
+      "accuracy": 0.544,
+      "loss": 1.975830810546875
+    },
+    "rrr_random_swatch": {
+      "accuracy": 0.61,
+      "loss": 2.0102727966308596
+    }
+  },
+  "lambda_rrr": 1000.0,
+  "rrr": {
+    "accuracy": 0.613,
+    "classification_loss": 2.0538904666900635,
+    "explanation_regularization_loss": 2.04209063667804e-05,
+    "loss": 2.0090308532714842
+  }
+}

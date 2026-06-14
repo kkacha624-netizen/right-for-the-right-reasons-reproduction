@@ -1,0 +1,28 @@
+[project]
+name = "right-for-the-right-reasons-reproduction"
+version = "0.1.0"
+description = "Reproduction code for Right for the Right Reasons experiments."
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+dependencies = [
+  "matplotlib>=3.8",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyyaml>=6.0",
+  "scikit-learn>=1.4",
+  "torch>=2.7",
+  "torchvision>=0.22",
+  "tqdm>=4.66",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.2",
+]
+
+[tool.uv]
+index-strategy = "unsafe-best-match"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,18 @@
+experiment:
+  name: toy_color
+  seed: 0
+dataset:
+  name: toy_color
+  train_samples: 5000
+  test_samples: 2000
+model:
+  name: mlp
+  hidden_dims: [50, 30]
+training:
+  epochs: 30
+  batch_size: 256
+  learning_rate: 0.001
+  weight_decay: 0.0001
+rrr:
+  enabled: false
+  lambda: 0.0

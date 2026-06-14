@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "accuracy": 0.5550906555090656,
+    "classification_loss": 0.6999860405921936,
+    "explanation_regularization_loss": 0.0,
+    "loss": 0.676691137763413
+  },
+  "batch_size": 256,
+  "device": "cpu",
+  "epochs": 3,
+  "experiment_id": "newsgroups",
+  "lambda_rrr": 1000.0,
+  "rrr": {
+    "accuracy": 0.5550906555090656,
+    "classification_loss": 0.6971749067306519,
+    "explanation_regularization_loss": 1.6965395843726583e-06,
+    "loss": 0.6876476293162156
+  }
+}

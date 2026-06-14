@@ -1,0 +1,16 @@
+{
+  "baseline": {
+    "accuracy": 0.5033333333333333,
+    "classification_loss": 0.6953632235527039,
+    "explanation_regularization_loss": 0.0,
+    "loss": 0.6926038996378581
+  },
+  "experiment_id": "explanation_visualization",
+  "figure": "results/figures/explanations/toy_color_gradients.png",
+  "rrr": {
+    "accuracy": 0.45,
+    "classification_loss": 0.6852762699127197,
+    "explanation_regularization_loss": 0.0011239900486543775,
+    "loss": 0.6951133918762207
+  }
+}

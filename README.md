@@ -188,13 +188,16 @@ source .venv/bin/activate
 uv sync
 ```
 
-### CUDA 12.3 の GPU を使用する場合
+### CUDA 13.1 以下の NVIDIA GPU を使用する場合
 
-CUDA 12.3 対応 GPU で PyTorch を使う場合は、通常の依存関係に加えて以下を実行する。
-PyTorch には `cu123` という専用 wheel はないため、CUDA 12.3 対応 NVIDIA ドライバで動作する CUDA 12 系 wheel として `torch==2.5.1` / `torchvision==0.20.1` の `cu121` を使用する。
+PyTorch 公式 wheel は CUDA 13.1 専用ビルドではなく、2026-06 時点の stable では CUDA 11.8 / 12.6 / 12.8 / CPU が選択肢として提供されている。
+このリポジトリでは、CUDA 13.1 以下のドライバ環境で使いやすい CUDA 12 系 wheel として `cu128` を使う。
+PyTorch 公式のインストールページでも、stable build の compute platform として CUDA 12.8 が案内されている。
 
 ```powershell
-.\scripts\setup_cuda123.ps1
+uv venv
+uv sync --dev
+.\scripts\setup_cuda131_or_lower.ps1
 ```
 
 CUDA が認識されているかは以下で確認する。
@@ -202,6 +205,8 @@ CUDA が認識されているかは以下で確認する。
 ```powershell
 .venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"
 ```
+
+GPU がない環境では自動的に CPU 実行へフォールバックする。
 
 ---
 
@@ -230,7 +235,7 @@ python scripts/prepare_data.py
 
 ## 実験一覧
 
-### Experiment 1: Synthetic dataset
+### Experiment 1: Toy Color / Synthetic dataset
 
 合成データセットを用いて、通常のモデルと Explanation Regularization を加えたモデルを比較する。
 
@@ -281,9 +286,10 @@ python scripts/run_newsgroups.py
 
 ---
 
-### Experiment 4: Diabetes dataset
+### Experiment 4: Iris-Cancer dataset
 
-医療系データセットを用いて、説明制約がモデルの判断根拠に与える影響を確認する。
+論文本文に基づき、Iris と Breast Cancer Wisconsin を結合した Iris-Cancer dataset を用いて、説明制約がモデルの判断根拠に与える影響を確認する。
+互換性のため、実行スクリプト名は `run_diabetes.py` のままにしている。
 
 ```bash
 python scripts/run_diabetes.py

@@ -1,0 +1,12 @@
+experiment_id,dataset,method,metric,reproduced_result,status,notes
+toy_color,toy_color,baseline,accuracy,0.5,completed,
+toy_color,toy_color,rrr,accuracy,0.5466666666666666,completed,
+iris_cancer,iris_cancer,baseline,accuracy,0.9333333333333333,completed,
+iris_cancer,iris_cancer,rrr,accuracy,0.5,completed,
+newsgroups,newsgroups,baseline,accuracy,0.5550906555090656,completed,
+newsgroups,newsgroups,rrr,accuracy,0.5550906555090656,completed,
+decoy_mnist,decoy_mnist,baseline,accuracy,0.545,completed,
+decoy_mnist,decoy_mnist,rrr,accuracy,0.613,completed,
+find_another_explanation,find_another_explanation,iterative_rrr,accuracy,0.4633333333333333,completed,final round
+explanation_visualization,explanation_visualization,baseline,accuracy,0.5033333333333333,completed,
+explanation_visualization,explanation_visualization,rrr,accuracy,0.45,completed,

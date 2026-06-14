@@ -1,0 +1,48 @@
+{
+  "device": "cpu",
+  "experiment_id": "find_another_explanation",
+  "history": [
+    {
+      "accuracy": 0.5233333333333333,
+      "masked_features": [
+        16,
+        48,
+        27,
+        43,
+        63,
+        10,
+        37,
+        73
+      ],
+      "round": 0
+    },
+    {
+      "accuracy": 0.47,
+      "masked_features": [
+        30,
+        51,
+        64,
+        39,
+        66,
+        44,
+        61,
+        2
+      ],
+      "round": 1
+    },
+    {
+      "accuracy": 0.4633333333333333,
+      "masked_features": [
+        55,
+        28,
+        34,
+        32,
+        54,
+        29,
+        59,
+        60
+      ],
+      "round": 2
+    }
+  ]
+}
