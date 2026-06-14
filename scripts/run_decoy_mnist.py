@@ -5,9 +5,10 @@ from torch.utils.data import DataLoader
 from _runner import ROOT, common_parser, run_pair
 from datasets.decoy_mnist import make_decoy_mnist
 from rrr.evaluate import evaluate
+from rrr.explain import gradient_attribution, lime_image_grid_attribution
 from rrr.gradients import probability_input_gradients
 from rrr.utils import get_device, set_seed, write_json
-from rrr.visualize import save_dataset_sample_images, save_image_grid
+from rrr.visualize import save_dataset_sample_images, save_image_explanation_grid, save_image_grid
 
 
 def _swatch_gradient_fraction(model, dataset, device, batch_size: int) -> float:
@@ -48,6 +49,38 @@ def _save_gradient_examples(baseline, rrr, dataset, device) -> list[str]:
     return paths
 
 
+def _save_sample_explanations(baseline, rrr, dataset, device) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for idx in range(5):
+        x, y, mask = dataset[idx]
+        row: dict[str, str] = {"sample": str(idx), "label": str(int(y))}
+        for model_name, model in [("baseline", baseline), ("rrr", rrr)]:
+            grad, pred, prob = gradient_attribution(model, x, device)
+            lime_map, _, _ = lime_image_grid_attribution(
+                model,
+                x,
+                device,
+                grid_size=7,
+                num_samples=196,
+                seed=idx,
+            )
+            path = ROOT / "results" / "figures" / "explanations" / "decoy_mnist" / f"{model_name}_sample_{idx:02d}.png"
+            save_image_explanation_grid(
+                path,
+                x.squeeze(0).numpy(),
+                grad.squeeze(0),
+                lime_map,
+                f"{model_name} / y={int(y)} / pred={pred} / p={prob:.3f}",
+                mask=mask.squeeze(0).numpy(),
+                cmap="gray",
+            )
+            row[f"{model_name}_figure"] = str(path)
+            row[f"{model_name}_pred"] = str(pred)
+            row[f"{model_name}_prob"] = f"{prob:.6f}"
+        rows.append(row)
+    return rows
+
+
 def main() -> dict:
     parser = common_parser()
     parser.add_argument("--data-dir", default="data/raw")
@@ -82,6 +115,7 @@ def main() -> dict:
             ),
             "rrr_swatch_gradient_fraction": _swatch_gradient_fraction(rrr, test_random_ds, device, args.batch_size),
             "gradient_figures": _save_gradient_examples(baseline, rrr, test_random_ds, device),
+            "sample_explanations": _save_sample_explanations(baseline, rrr, test_random_ds, device),
         }
 
     result = run_pair(

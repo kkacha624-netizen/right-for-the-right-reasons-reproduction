@@ -15,15 +15,943 @@
       "loss": 0.5866335550944011
     },
     "rrr_without_iris": {
-      "accuracy": 0.5,
-      "loss": 0.6994945526123046
-    }
+      "accuracy": 0.5333333333333333,
+      "loss": 0.6696676254272461
+    },
+    "sample_explanations": [
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\baseline_sample_00.png",
+        "baseline_pred": 1,
+        "baseline_prob": 0.5443162322044373,
+        "baseline_top_gradient": [
+          {
+            "attribution": -0.013901812955737114,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 1
+          },
+          {
+            "attribution": -0.010766774415969849,
+            "feature": "cancer:worst compactness",
+            "rank": 2
+          },
+          {
+            "attribution": 0.010727892629802227,
+            "feature": "cancer:mean concavity",
+            "rank": 3
+          },
+          {
+            "attribution": -0.010530330240726471,
+            "feature": "cancer:worst texture",
+            "rank": 4
+          },
+          {
+            "attribution": 0.00810715276747942,
+            "feature": "iris:petal width (cm)",
+            "rank": 5
+          },
+          {
+            "attribution": 0.008102139458060265,
+            "feature": "iris:petal length (cm)",
+            "rank": 6
+          },
+          {
+            "attribution": -0.00807731319218874,
+            "feature": "cancer:worst area",
+            "rank": 7
+          },
+          {
+            "attribution": -0.006970930844545364,
+            "feature": "cancer:fractal dimension error",
+            "rank": 8
+          }
+        ],
+        "baseline_top_surrogate": [
+          {
+            "attribution": -0.01117206085473299,
+            "feature": "cancer:worst texture",
+            "rank": 1
+          },
+          {
+            "attribution": -0.011075465939939022,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 2
+          },
+          {
+            "attribution": 0.010267465375363827,
+            "feature": "cancer:mean concavity",
+            "rank": 3
+          },
+          {
+            "attribution": -0.008892477490007877,
+            "feature": "cancer:worst compactness",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008226588368415833,
+            "feature": "cancer:worst smoothness",
+            "rank": 5
+          },
+          {
+            "attribution": 0.007291360292583704,
+            "feature": "iris:petal length (cm)",
+            "rank": 6
+          },
+          {
+            "attribution": -0.006567200645804405,
+            "feature": "cancer:worst area",
+            "rank": 7
+          },
+          {
+            "attribution": 0.006366980727761984,
+            "feature": "iris:petal width (cm)",
+            "rank": 8
+          }
+        ],
+        "label": 1,
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\rrr_sample_00.png",
+        "rrr_pred": 1,
+        "rrr_prob": 0.5029823780059814,
+        "rrr_top_gradient": [
+          {
+            "attribution": 0.02010939083993435,
+            "feature": "cancer:mean smoothness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.015600543469190598,
+            "feature": "iris:petal width (cm)",
+            "rank": 2
+          },
+          {
+            "attribution": -0.014549908228218555,
+            "feature": "cancer:compactness error",
+            "rank": 3
+          },
+          {
+            "attribution": -0.012354790233075619,
+            "feature": "cancer:worst smoothness",
+            "rank": 4
+          },
+          {
+            "attribution": -0.011299085803329945,
+            "feature": "cancer:worst symmetry",
+            "rank": 5
+          },
+          {
+            "attribution": -0.011197803542017937,
+            "feature": "cancer:smoothness error",
+            "rank": 6
+          },
+          {
+            "attribution": 0.008860555477440357,
+            "feature": "iris:petal length (cm)",
+            "rank": 7
+          },
+          {
+            "attribution": 0.006803208030760288,
+            "feature": "cancer:fractal dimension error",
+            "rank": 8
+          }
+        ],
+        "rrr_top_surrogate": [
+          {
+            "attribution": 0.012806495651602745,
+            "feature": "cancer:mean smoothness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.00932591687887907,
+            "feature": "cancer:fractal dimension error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.009132585488259792,
+            "feature": "iris:petal length (cm)",
+            "rank": 3
+          },
+          {
+            "attribution": -0.009030913934111595,
+            "feature": "cancer:worst symmetry",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008807482197880745,
+            "feature": "cancer:compactness error",
+            "rank": 5
+          },
+          {
+            "attribution": 0.008699672296643257,
+            "feature": "iris:petal width (cm)",
+            "rank": 6
+          },
+          {
+            "attribution": -0.007917076349258423,
+            "feature": "cancer:worst smoothness",
+            "rank": 7
+          },
+          {
+            "attribution": -0.007675927132368088,
+            "feature": "cancer:smoothness error",
+            "rank": 8
+          }
+        ],
+        "sample": 0
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\baseline_sample_01.png",
+        "baseline_pred": 0,
+        "baseline_prob": 0.6880576610565186,
+        "baseline_top_gradient": [
+          {
+            "attribution": 0.011264516972005367,
+            "feature": "cancer:mean concave points",
+            "rank": 1
+          },
+          {
+            "attribution": 0.008451062254607677,
+            "feature": "cancer:concave points error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.008398082107305527,
+            "feature": "cancer:perimeter error",
+            "rank": 3
+          },
+          {
+            "attribution": -0.007669141981750727,
+            "feature": "cancer:radius error",
+            "rank": 4
+          },
+          {
+            "attribution": 0.0068350546061992645,
+            "feature": "cancer:mean area",
+            "rank": 5
+          },
+          {
+            "attribution": 0.006517496425658464,
+            "feature": "cancer:worst perimeter",
+            "rank": 6
+          },
+          {
+            "attribution": 0.006077120080590248,
+            "feature": "cancer:mean radius",
+            "rank": 7
+          },
+          {
+            "attribution": 0.0059798224829137325,
+            "feature": "cancer:worst smoothness",
+            "rank": 8
+          }
+        ],
+        "baseline_top_surrogate": [
+          {
+            "attribution": 0.012361030094325542,
+            "feature": "cancer:mean concave points",
+            "rank": 1
+          },
+          {
+            "attribution": -0.008137276396155357,
+            "feature": "cancer:radius error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.007922071032226086,
+            "feature": "cancer:concave points error",
+            "rank": 3
+          },
+          {
+            "attribution": 0.007016473915427923,
+            "feature": "cancer:mean radius",
+            "rank": 4
+          },
+          {
+            "attribution": 0.006336807738989592,
+            "feature": "cancer:worst concavity",
+            "rank": 5
+          },
+          {
+            "attribution": 0.006218029651790857,
+            "feature": "cancer:perimeter error",
+            "rank": 6
+          },
+          {
+            "attribution": 0.00605291360989213,
+            "feature": "cancer:worst smoothness",
+            "rank": 7
+          },
+          {
+            "attribution": 0.0059965262189507484,
+            "feature": "cancer:worst compactness",
+            "rank": 8
+          }
+        ],
+        "label": 0,
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\rrr_sample_01.png",
+        "rrr_pred": 0,
+        "rrr_prob": 0.5849819779396057,
+        "rrr_top_gradient": [
+          {
+            "attribution": 0.012296373024582863,
+            "feature": "cancer:symmetry error",
+            "rank": 1
+          },
+          {
+            "attribution": 0.01210998184978962,
+            "feature": "cancer:area error",
+            "rank": 2
+          },
+          {
+            "attribution": -0.010510802268981934,
+            "feature": "cancer:texture error",
+            "rank": 3
+          },
+          {
+            "attribution": -0.010349404066801071,
+            "feature": "cancer:fractal dimension error",
+            "rank": 4
+          },
+          {
+            "attribution": 0.007050467189401388,
+            "feature": "cancer:concave points error",
+            "rank": 5
+          },
+          {
+            "attribution": -0.006542584393173456,
+            "feature": "cancer:mean concave points",
+            "rank": 6
+          },
+          {
+            "attribution": -0.0065218014642596245,
+            "feature": "iris:petal width (cm)",
+            "rank": 7
+          },
+          {
+            "attribution": -0.006353661883622408,
+            "feature": "cancer:compactness error",
+            "rank": 8
+          }
+        ],
+        "rrr_top_surrogate": [
+          {
+            "attribution": 0.011721096932888031,
+            "feature": "cancer:symmetry error",
+            "rank": 1
+          },
+          {
+            "attribution": -0.008791938424110413,
+            "feature": "cancer:texture error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.008367992006242275,
+            "feature": "cancer:perimeter error",
+            "rank": 3
+          },
+          {
+            "attribution": 0.008056357502937317,
+            "feature": "cancer:area error",
+            "rank": 4
+          },
+          {
+            "attribution": -0.00734757212921977,
+            "feature": "cancer:fractal dimension error",
+            "rank": 5
+          },
+          {
+            "attribution": -0.006583891808986664,
+            "feature": "cancer:compactness error",
+            "rank": 6
+          },
+          {
+            "attribution": -0.005804169457405806,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 7
+          },
+          {
+            "attribution": 0.005410881247371435,
+            "feature": "cancer:radius error",
+            "rank": 8
+          }
+        ],
+        "sample": 1
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\baseline_sample_02.png",
+        "baseline_pred": 0,
+        "baseline_prob": 0.5537117123603821,
+        "baseline_top_gradient": [
+          {
+            "attribution": 0.018463214859366417,
+            "feature": "cancer:mean texture",
+            "rank": 1
+          },
+          {
+            "attribution": 0.017990419641137123,
+            "feature": "cancer:compactness error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.011106649413704872,
+            "feature": "cancer:concave points error",
+            "rank": 3
+          },
+          {
+            "attribution": 0.010467877611517906,
+            "feature": "cancer:mean compactness",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008725753054022789,
+            "feature": "iris:sepal width (cm)",
+            "rank": 5
+          },
+          {
+            "attribution": 0.008621054701507092,
+            "feature": "cancer:worst compactness",
+            "rank": 6
+          },
+          {
+            "attribution": 0.008520019240677357,
+            "feature": "cancer:worst perimeter",
+            "rank": 7
+          },
+          {
+            "attribution": -0.0078843729570508,
+            "feature": "cancer:mean perimeter",
+            "rank": 8
+          }
+        ],
+        "baseline_top_surrogate": [
+          {
+            "attribution": 0.015599329955875874,
+            "feature": "cancer:compactness error",
+            "rank": 1
+          },
+          {
+            "attribution": 0.01285463385283947,
+            "feature": "cancer:mean texture",
+            "rank": 2
+          },
+          {
+            "attribution": 0.012166202068328857,
+            "feature": "cancer:mean concave points",
+            "rank": 3
+          },
+          {
+            "attribution": 0.011449293233454227,
+            "feature": "cancer:concave points error",
+            "rank": 4
+          },
+          {
+            "attribution": 0.010857769288122654,
+            "feature": "cancer:worst compactness",
+            "rank": 5
+          },
+          {
+            "attribution": -0.010119026526808739,
+            "feature": "iris:sepal width (cm)",
+            "rank": 6
+          },
+          {
+            "attribution": 0.008792133070528507,
+            "feature": "cancer:mean compactness",
+            "rank": 7
+          },
+          {
+            "attribution": 0.007745509967207909,
+            "feature": "cancer:worst perimeter",
+            "rank": 8
+          }
+        ],
+        "label": 0,
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\rrr_sample_02.png",
+        "rrr_pred": 0,
+        "rrr_prob": 0.5412009954452515,
+        "rrr_top_gradient": [
+          {
+            "attribution": 0.008335884660482407,
+            "feature": "cancer:concave points error",
+            "rank": 1
+          },
+          {
+            "attribution": -0.007951305247843266,
+            "feature": "cancer:mean fractal dimension",
+            "rank": 2
+          },
+          {
+            "attribution": 0.006783901248127222,
+            "feature": "cancer:radius error",
+            "rank": 3
+          },
+          {
+            "attribution": -0.006164110265672207,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 4
+          },
+          {
+            "attribution": -0.006126631982624531,
+            "feature": "cancer:fractal dimension error",
+            "rank": 5
+          },
+          {
+            "attribution": 0.0060678631998598576,
+            "feature": "cancer:symmetry error",
+            "rank": 6
+          },
+          {
+            "attribution": -0.005840606056153774,
+            "feature": "cancer:texture error",
+            "rank": 7
+          },
+          {
+            "attribution": -0.005308044143021107,
+            "feature": "cancer:mean concave points",
+            "rank": 8
+          }
+        ],
+        "rrr_top_surrogate": [
+          {
+            "attribution": -0.00736277038231492,
+            "feature": "cancer:texture error",
+            "rank": 1
+          },
+          {
+            "attribution": -0.00703450245782733,
+            "feature": "cancer:fractal dimension error",
+            "rank": 2
+          },
+          {
+            "attribution": 0.00696123531088233,
+            "feature": "cancer:concave points error",
+            "rank": 3
+          },
+          {
+            "attribution": 0.00641103507950902,
+            "feature": "cancer:symmetry error",
+            "rank": 4
+          },
+          {
+            "attribution": 0.005997265223413706,
+            "feature": "cancer:worst compactness",
+            "rank": 5
+          },
+          {
+            "attribution": 0.0057211266830563545,
+            "feature": "cancer:perimeter error",
+            "rank": 6
+          },
+          {
+            "attribution": 0.005305459722876549,
+            "feature": "cancer:radius error",
+            "rank": 7
+          },
+          {
+            "attribution": 0.004892778117209673,
+            "feature": "cancer:worst smoothness",
+            "rank": 8
+          }
+        ],
+        "sample": 2
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\baseline_sample_03.png",
+        "baseline_pred": 1,
+        "baseline_prob": 0.5630723237991333,
+        "baseline_top_gradient": [
+          {
+            "attribution": -0.011980364099144936,
+            "feature": "cancer:worst texture",
+            "rank": 1
+          },
+          {
+            "attribution": -0.011605479754507542,
+            "feature": "cancer:worst radius",
+            "rank": 2
+          },
+          {
+            "attribution": -0.010289288125932217,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 3
+          },
+          {
+            "attribution": 0.010114687494933605,
+            "feature": "cancer:mean symmetry",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008748531341552734,
+            "feature": "cancer:worst smoothness",
+            "rank": 5
+          },
+          {
+            "attribution": 0.008727164939045906,
+            "feature": "cancer:symmetry error",
+            "rank": 6
+          },
+          {
+            "attribution": -0.008710524067282677,
+            "feature": "cancer:concave points error",
+            "rank": 7
+          },
+          {
+            "attribution": -0.008428053930401802,
+            "feature": "cancer:mean area",
+            "rank": 8
+          }
+        ],
+        "baseline_top_surrogate": [
+          {
+            "attribution": -0.011121335439383984,
+            "feature": "cancer:worst texture",
+            "rank": 1
+          },
+          {
+            "attribution": -0.00957931112498045,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 2
+          },
+          {
+            "attribution": -0.008615703321993351,
+            "feature": "cancer:fractal dimension error",
+            "rank": 3
+          },
+          {
+            "attribution": -0.008213462308049202,
+            "feature": "cancer:mean area",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008114137686789036,
+            "feature": "cancer:worst compactness",
+            "rank": 5
+          },
+          {
+            "attribution": -0.008053440600633621,
+            "feature": "cancer:worst smoothness",
+            "rank": 6
+          },
+          {
+            "attribution": 0.007922980934381485,
+            "feature": "cancer:concavity error",
+            "rank": 7
+          },
+          {
+            "attribution": -0.007863683626055717,
+            "feature": "cancer:worst radius",
+            "rank": 8
+          }
+        ],
+        "label": 1,
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\rrr_sample_03.png",
+        "rrr_pred": 0,
+        "rrr_prob": 0.5006996989250183,
+        "rrr_top_gradient": [
+          {
+            "attribution": -0.013846760615706444,
+            "feature": "cancer:mean compactness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.011880405247211456,
+            "feature": "cancer:worst symmetry",
+            "rank": 2
+          },
+          {
+            "attribution": -0.011534292250871658,
+            "feature": "cancer:mean smoothness",
+            "rank": 3
+          },
+          {
+            "attribution": 0.010116848163306713,
+            "feature": "cancer:worst smoothness",
+            "rank": 4
+          },
+          {
+            "attribution": 0.009781152941286564,
+            "feature": "cancer:mean texture",
+            "rank": 5
+          },
+          {
+            "attribution": -0.009220209904015064,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 6
+          },
+          {
+            "attribution": 0.008171443827450275,
+            "feature": "cancer:compactness error",
+            "rank": 7
+          },
+          {
+            "attribution": 0.00786287896335125,
+            "feature": "cancer:symmetry error",
+            "rank": 8
+          }
+        ],
+        "rrr_top_surrogate": [
+          {
+            "attribution": -0.01266130805015564,
+            "feature": "cancer:mean compactness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.011116734705865383,
+            "feature": "cancer:worst smoothness",
+            "rank": 2
+          },
+          {
+            "attribution": -0.010782487690448761,
+            "feature": "cancer:mean smoothness",
+            "rank": 3
+          },
+          {
+            "attribution": 0.010335296392440796,
+            "feature": "cancer:worst symmetry",
+            "rank": 4
+          },
+          {
+            "attribution": 0.007779426872730255,
+            "feature": "cancer:worst concave points",
+            "rank": 5
+          },
+          {
+            "attribution": 0.007569192908704281,
+            "feature": "cancer:compactness error",
+            "rank": 6
+          },
+          {
+            "attribution": -0.007294468581676483,
+            "feature": "cancer:fractal dimension error",
+            "rank": 7
+          },
+          {
+            "attribution": 0.0072546848095953465,
+            "feature": "cancer:mean texture",
+            "rank": 8
+          }
+        ],
+        "sample": 3
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\baseline_sample_04.png",
+        "baseline_pred": 1,
+        "baseline_prob": 0.5142108798027039,
+        "baseline_top_gradient": [
+          {
+            "attribution": -0.017576487734913826,
+            "feature": "cancer:fractal dimension error",
+            "rank": 1
+          },
+          {
+            "attribution": -0.01706133969128132,
+            "feature": "cancer:worst texture",
+            "rank": 2
+          },
+          {
+            "attribution": -0.01467744167894125,
+            "feature": "cancer:worst radius",
+            "rank": 3
+          },
+          {
+            "attribution": -0.013281903229653835,
+            "feature": "cancer:worst smoothness",
+            "rank": 4
+          },
+          {
+            "attribution": -0.013121096417307854,
+            "feature": "cancer:mean radius",
+            "rank": 5
+          },
+          {
+            "attribution": 0.01206980925053358,
+            "feature": "cancer:compactness error",
+            "rank": 6
+          },
+          {
+            "attribution": -0.011840136721730232,
+            "feature": "cancer:worst compactness",
+            "rank": 7
+          },
+          {
+            "attribution": -0.010823658667504787,
+            "feature": "cancer:mean area",
+            "rank": 8
+          }
+        ],
+        "baseline_top_surrogate": [
+          {
+            "attribution": -0.013745774514973164,
+            "feature": "cancer:worst texture",
+            "rank": 1
+          },
+          {
+            "attribution": -0.012679288163781166,
+            "feature": "cancer:worst compactness",
+            "rank": 2
+          },
+          {
+            "attribution": -0.011932914145290852,
+            "feature": "cancer:mean radius",
+            "rank": 3
+          },
+          {
+            "attribution": -0.011817964725196362,
+            "feature": "cancer:fractal dimension error",
+            "rank": 4
+          },
+          {
+            "attribution": -0.011274775490164757,
+            "feature": "cancer:worst smoothness",
+            "rank": 5
+          },
+          {
+            "attribution": -0.009681961499154568,
+            "feature": "cancer:worst radius",
+            "rank": 6
+          },
+          {
+            "attribution": -0.00856065284460783,
+            "feature": "cancer:mean fractal dimension",
+            "rank": 7
+          },
+          {
+            "attribution": -0.008285172283649445,
+            "feature": "cancer:worst fractal dimension",
+            "rank": 8
+          }
+        ],
+        "label": 1,
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\iris_cancer\\rrr_sample_04.png",
+        "rrr_pred": 1,
+        "rrr_prob": 0.5331506133079529,
+        "rrr_top_gradient": [
+          {
+            "attribution": 0.012229220941662788,
+            "feature": "cancer:mean smoothness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.011285847052931786,
+            "feature": "cancer:texture error",
+            "rank": 2
+          },
+          {
+            "attribution": -0.009675550274550915,
+            "feature": "cancer:worst symmetry",
+            "rank": 3
+          },
+          {
+            "attribution": 0.009324329905211926,
+            "feature": "iris:petal length (cm)",
+            "rank": 4
+          },
+          {
+            "attribution": -0.008163176476955414,
+            "feature": "cancer:worst smoothness",
+            "rank": 5
+          },
+          {
+            "attribution": 0.007221585605293512,
+            "feature": "cancer:fractal dimension error",
+            "rank": 6
+          },
+          {
+            "attribution": 0.006667862646281719,
+            "feature": "iris:petal width (cm)",
+            "rank": 7
+          },
+          {
+            "attribution": 0.005752341356128454,
+            "feature": "cancer:worst concavity",
+            "rank": 8
+          }
+        ],
+        "rrr_top_surrogate": [
+          {
+            "attribution": 0.010528857819736004,
+            "feature": "cancer:mean smoothness",
+            "rank": 1
+          },
+          {
+            "attribution": 0.008520428091287613,
+            "feature": "cancer:texture error",
+            "rank": 2
+          },
+          {
+            "attribution": -0.008025122806429863,
+            "feature": "cancer:worst symmetry",
+            "rank": 3
+          },
+          {
+            "attribution": -0.007536162156611681,
+            "feature": "cancer:worst smoothness",
+            "rank": 4
+          },
+          {
+            "attribution": 0.007224567700177431,
+            "feature": "iris:petal length (cm)",
+            "rank": 5
+          },
+          {
+            "attribution": 0.006559844594448805,
+            "feature": "iris:petal width (cm)",
+            "rank": 6
+          },
+          {
+            "attribution": -0.006262977607548237,
+            "feature": "cancer:smoothness error",
+            "rank": 7
+          },
+          {
+            "attribution": 0.00562312500551343,
+            "feature": "cancer:fractal dimension error",
+            "rank": 8
+          }
+        ],
+        "sample": 4
+      }
+    ]
   },
   "lambda_rrr": 1000.0,
+  "paper_targets": {
+    "baseline_accuracy_mean": 0.92,
+    "baseline_without_iris_accuracy_mean": 0.81,
+    "splits": 350
+  },
+  "reproduction_checks": {
+    "baseline_accuracy_close_to_paper": true,
+    "baseline_without_iris_degrades": true,
+    "rrr_reduces_iris_removal_gap": true,
+    "used_paper_split_count": false
+  },
   "rrr": {
-    "accuracy": 0.5,
-    "classification_loss": 0.6896631717681885,
-    "explanation_regularization_loss": 0.0002511182683520019,
-    "loss": 0.6857000986735026
+    "accuracy": 0.7333333333333333,
+    "classification_loss": 0.6599271893501282,
+    "explanation_regularization_loss": 9.364194738736842e-06,
+    "loss": 0.6419314066569011
+  },
+  "sample_images": [
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\iris_cancer\\sample_00.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\iris_cancer\\sample_01.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\iris_cancer\\sample_02.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\iris_cancer\\sample_03.png",
+    "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\iris_cancer\\sample_04.png"
+  ],
+  "split_aggregate": {
+    "baseline_accuracy": {
+      "mean": 0.9333333333333333,
+      "std": 0.0
+    },
+    "baseline_without_iris_accuracy": {
+      "mean": 0.7666666666666667,
+      "std": 0.0
+    },
+    "rrr_accuracy": {
+      "mean": 0.8666666666666667,
+      "std": 0.0
+    },
+    "rrr_without_iris_accuracy": {
+      "mean": 0.8333333333333334,
+      "std": 0.0
+    }
   }
 }

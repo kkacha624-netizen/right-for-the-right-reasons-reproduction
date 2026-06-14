@@ -15,21 +15,73 @@
       "top_middle_fraction": 0.13443235137770787
     },
     "rrr_rule_gradients": {
-      "corner_fraction": 0.13940656951478608,
-      "top_middle_fraction": 0.12911060703313412
-    }
+      "corner_fraction": 0.15790117399024928,
+      "top_middle_fraction": 0.1283908469743778
+    },
+    "sample_explanations": [
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\baseline_sample_00.png",
+        "baseline_pred": "1",
+        "baseline_prob": "0.516104",
+        "label": "1",
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\rrr_sample_00.png",
+        "rrr_pred": "1",
+        "rrr_prob": "0.511974",
+        "sample": "0"
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\baseline_sample_01.png",
+        "baseline_pred": "1",
+        "baseline_prob": "0.518297",
+        "label": "1",
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\rrr_sample_01.png",
+        "rrr_pred": "1",
+        "rrr_prob": "0.524515",
+        "sample": "1"
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\baseline_sample_02.png",
+        "baseline_pred": "1",
+        "baseline_prob": "0.544913",
+        "label": "1",
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\rrr_sample_02.png",
+        "rrr_pred": "1",
+        "rrr_prob": "0.509564",
+        "sample": "2"
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\baseline_sample_03.png",
+        "baseline_pred": "0",
+        "baseline_prob": "0.510923",
+        "label": "1",
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\rrr_sample_03.png",
+        "rrr_pred": "1",
+        "rrr_prob": "0.518418",
+        "sample": "3"
+      },
+      {
+        "baseline_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\baseline_sample_04.png",
+        "baseline_pred": "1",
+        "baseline_prob": "0.507987",
+        "label": "1",
+        "rrr_figure": "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\explanations\\toy_color\\rrr_sample_04.png",
+        "rrr_pred": "1",
+        "rrr_prob": "0.529832",
+        "sample": "4"
+      }
+    ]
   },
-  "lambda_rrr": 1000.0,
+  "lambda_rrr": 100.0,
   "reproduction_checks": {
     "rrr_high_accuracy": false,
-    "rrr_suppresses_corners_vs_baseline": true,
+    "rrr_suppresses_corners_vs_baseline": false,
     "rrr_uses_top_middle_more_than_baseline": false
   },
   "rrr": {
-    "accuracy": 0.4766666666666667,
-    "classification_loss": 0.690544605255127,
-    "explanation_regularization_loss": 1.6804374354251195e-06,
-    "loss": 0.6947505124409994
+    "accuracy": 0.47333333333333333,
+    "classification_loss": 0.689681351184845,
+    "explanation_regularization_loss": 3.4062163649650756e-06,
+    "loss": 0.6946703592936198
   },
   "sample_images": [
     "C:\\Users\\gakum\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\GitHub\\right-for-the-right-reasons-reproduction\\results\\figures\\samples\\toy_color\\sample_00.png",

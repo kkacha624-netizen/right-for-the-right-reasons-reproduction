@@ -359,6 +359,26 @@ results/figures/samples/iris_cancer/
 Toy Color と Decoy MNIST は入力画像そのものを保存する。
 20 Newsgroups は文書テキストを画像化し、Iris-Cancer は特徴量 bar plot として保存する。
 
+各サンプルに対するモデルの判断根拠は以下に保存する。
+
+```text
+results/figures/explanations/toy_color/
+results/figures/explanations/decoy_mnist/
+results/figures/explanations/newsgroups/
+results/figures/explanations/iris_cancer/
+```
+
+各説明図では、baseline model と RRR model の両方について、入力勾配による説明と、LIME と同じ発想の局所摂動 surrogate による説明を比較する。
+画像データでは heatmap、表形式・テキストデータでは attribution bar plot として保存する。
+
+20 Newsgroups では、サンプル別の説明に加えて、全体で高い入力勾配を持つ単語も CSV に保存する。
+
+```text
+results/tables/newsgroups_baseline_top_gradient_words.csv
+results/tables/newsgroups_rrr_top_gradient_words.csv
+results/tables/newsgroups_sample_explanations.csv
+```
+
 結果を Colab から回収する場合は以下を使う。
 
 ```python

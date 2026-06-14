@@ -7,15 +7,42 @@ from torch.utils.data import DataLoader
 from _runner import ROOT, common_parser, run_pair
 from datasets.iris_cancer import make_iris_cancer
 from rrr.evaluate import evaluate
+from rrr.explain import gradient_attribution, lime_tabular_attribution, top_attributions
 from rrr.models import MLPClassifier
 from rrr.train import train_classifier
 from rrr.utils import ensure_dir, get_device, set_seed, write_json
-from rrr.visualize import save_feature_sample_images
+from rrr.visualize import save_explanation_bars, save_feature_sample_images
 
 
 def _mean_std(values: list[float]) -> dict[str, float]:
     arr = np.array(values, dtype=float)
     return {"mean": float(arr.mean()), "std": float(arr.std(ddof=1)) if len(arr) > 1 else 0.0}
+
+
+def _save_sample_explanations(baseline, rrr, dataset, feature_names: list[str], device) -> list[dict]:
+    rows: list[dict] = []
+    for idx in range(5):
+        x, y, _ = dataset[idx]
+        row = {"sample": idx, "label": int(y)}
+        for model_name, model in [("baseline", baseline), ("rrr", rrr)]:
+            grad, pred, prob = gradient_attribution(model, x, device)
+            lime_values, _, _ = lime_tabular_attribution(model, x, device, num_samples=256, seed=idx)
+            path = ROOT / "results" / "figures" / "explanations" / "iris_cancer" / f"{model_name}_sample_{idx:02d}.png"
+            save_explanation_bars(
+                path,
+                grad.reshape(-1),
+                lime_values.reshape(-1),
+                feature_names,
+                f"{model_name} / y={int(y)} / pred={pred} / p={prob:.3f}",
+                top_k=12,
+            )
+            row[f"{model_name}_figure"] = str(path)
+            row[f"{model_name}_pred"] = pred
+            row[f"{model_name}_prob"] = prob
+            row[f"{model_name}_top_gradient"] = top_attributions(grad, feature_names, k=8)
+            row[f"{model_name}_top_surrogate"] = top_attributions(lime_values, feature_names, k=8)
+        rows.append(row)
+    return rows
 
 
 def main() -> dict:
@@ -42,6 +69,7 @@ def main() -> dict:
         return {
             "baseline_without_iris": evaluate(baseline, loader, device),
             "rrr_without_iris": evaluate(rrr, loader, device),
+            "sample_explanations": _save_sample_explanations(baseline, rrr, test_ds, feature_names, device),
         }
 
     single = run_pair(

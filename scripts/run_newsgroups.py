@@ -7,9 +7,10 @@ from torch.utils.data import DataLoader
 
 from _runner import ROOT, common_parser, run_pair
 from datasets.newsgroups import make_newsgroups
+from rrr.explain import gradient_attribution, lime_tabular_attribution, top_attributions
 from rrr.gradients import probability_input_gradients
 from rrr.utils import get_device, set_seed, write_json
-from rrr.visualize import save_text_sample_images
+from rrr.visualize import save_explanation_bars, save_text_sample_images
 
 
 def _write_top_gradient_words(baseline, rrr, dataset, vocab: list[str], device, batch_size: int) -> dict[str, str]:
@@ -45,6 +46,54 @@ def _write_top_gradient_words(baseline, rrr, dataset, vocab: list[str], device, 
     return {key: str(path) for key, path in paths.items()}
 
 
+def _write_sample_text_explanations(baseline, rrr, dataset, vocab: list[str], device) -> list[dict]:
+    rows: list[dict] = []
+    csv_path = ROOT / "results" / "tables" / "newsgroups_sample_explanations.csv"
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    with csv_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["sample", "model", "rank", "method", "word", "attribution", "pred", "prob"])
+        for idx in range(5):
+            x, y, _ = dataset[idx]
+            row = {"sample": idx, "label": int(y)}
+            for model_name, model in [("baseline", baseline), ("rrr", rrr)]:
+                grad, pred, prob = gradient_attribution(model, x, device)
+                lime_values, _, _ = lime_tabular_attribution(model, x, device, num_samples=256, seed=idx, noise_scale=0.25)
+                path = ROOT / "results" / "figures" / "explanations" / "newsgroups" / f"{model_name}_sample_{idx:02d}.png"
+                save_explanation_bars(
+                    path,
+                    grad.reshape(-1),
+                    lime_values.reshape(-1),
+                    vocab,
+                    f"{model_name} / y={int(y)} / pred={pred} / p={prob:.3f}",
+                    top_k=12,
+                )
+                top_grad = top_attributions(grad, vocab, k=10)
+                top_lime = top_attributions(lime_values, vocab, k=10)
+                for method, top_rows in [("input_gradient", top_grad), ("local_surrogate", top_lime)]:
+                    for item in top_rows:
+                        writer.writerow(
+                            [
+                                idx,
+                                model_name,
+                                item["rank"],
+                                method,
+                                item["feature"],
+                                item["attribution"],
+                                pred,
+                                prob,
+                            ]
+                        )
+                row[f"{model_name}_figure"] = str(path)
+                row[f"{model_name}_pred"] = pred
+                row[f"{model_name}_prob"] = prob
+                row[f"{model_name}_top_gradient"] = top_grad
+                row[f"{model_name}_top_surrogate"] = top_lime
+            rows.append(row)
+    rows.append({"sample_explanation_csv": str(csv_path)})
+    return rows
+
+
 def main() -> dict:
     parser = common_parser()
     parser.add_argument("--max-features", type=int, default=5000)
@@ -73,7 +122,9 @@ def main() -> dict:
     device = get_device(args.device)
 
     def extra_eval(baseline, rrr):
-        return _write_top_gradient_words(baseline, rrr, test_ds, vocab, device, args.batch_size)
+        outputs = _write_top_gradient_words(baseline, rrr, test_ds, vocab, device, args.batch_size)
+        outputs["sample_explanations"] = _write_sample_text_explanations(baseline, rrr, test_ds, vocab, device)
+        return outputs
 
     result = run_pair(
         experiment="newsgroups",

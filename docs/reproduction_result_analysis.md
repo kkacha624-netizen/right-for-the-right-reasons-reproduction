@@ -1,39 +1,49 @@
 # 再現実験結果の分析
 
-このメモは、Colab で再実行した `results.zip` の内容をもとに、Ross, Hughes, Doshi-Velez の論文 **Right for the Right Reasons: Training Differentiable Models by Constraining their Explanations** の各実験と比較したものである。
+このメモは、Colab で再実行した `results (2).zip` の内容をもとに、Ross, Hughes, Doshi-Velez の論文 **Right for the Right Reasons: Training Differentiable Models by Constraining their Explanations** の各実験と比較したものである。
 
-今回の実行では、主要実験が `device: cuda` で実行されている。`results/tables/reproduction_summary.csv` と各 `experiments/<experiment>/metrics.json` の値は一致しており、前回問題だった summary と個別 metrics の不一致は解消されている。
+今回の実行では、全ての主要実験が `device: cuda` で実行され、`results/tables/reproduction_summary.csv` 上の全項目が `reproduced` 判定になっている。前回まで残っていた古い雛形ファイル `exp001_baseline` と `exp002_gradcam` は zip から除外されており、成果物の構成も整理された。
 
-また、各データセットのサンプル画像が 5 枚ずつ保存されている。
+## 成果物の確認
+
+今回の zip には以下が含まれている。
 
 ```text
+results/tables/reproduction_summary.csv
+results/tables/newsgroups_baseline_top_gradient_words.csv
+results/tables/newsgroups_rrr_top_gradient_words.csv
+results/figures/explanations/toy_color_gradients.png
+results/figures/explanations/decoy_mnist/sample_00.png ... sample_04.png
 results/figures/samples/toy_color/sample_00.png ... sample_04.png
 results/figures/samples/decoy_mnist/sample_00.png ... sample_04.png
 results/figures/samples/newsgroups/sample_00.png ... sample_04.png
 results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
+experiments/*/metrics.json
 ```
+
+古い空の雛形ファイルは含まれていない。
 
 ## 全体評価
 
 | 実験 | 状態 | 短評 |
 | --- | --- | --- |
-| Toy Color / Synthetic | 部分的に再現 | RRR は corner への勾配を強く抑制し、top-middle rule へ説明を移している。ただし RRR accuracy が `0.808` で、成功基準の `0.90` を下回った。 |
+| Toy Color / Synthetic | 再現成功 | `lambda_rrr=100.0` に調整したことで、RRR accuracy が `0.973` まで回復し、corner 勾配抑制と top-middle 勾配移行も確認できた。 |
 | Iris-Cancer | 再現成功 | 350 split 集計が行われ、baseline の Iris 除去時劣化と RRR によるギャップ縮小が確認できた。 |
 | 20 Newsgroups | 再現成功 | TF-IDF 5000 components、metadata を残す設定で baseline accuracy `0.9442` となり、論文メモの約 `94%` に一致した。 |
 | Decoy MNIST | 再現成功 | baseline は random swatch で崩れ、RRR は高精度を維持した。swatch 勾配も大きく抑制されている。 |
-| Find Another Explanation | 再現成功 | `cutoff=0.67` を使い、1・2 round は高精度、後半 round で性能低下という論文の挙動に近い結果が出た。 |
-| Explanation Visualization | 再現成功 | Toy Color の入力、baseline gradient、RRR gradient、annotation mask の図が正常に生成された。 |
+| Find Another Explanation | 再現成功 | cutoff `0.67` を使い、round 0/1 は高精度、round 2 で性能低下という論文の挙動に近い結果が出た。 |
+| Explanation Visualization | 再現成功 | Toy Color の勾配可視化に加え、Decoy MNIST の baseline/RRR 勾配図も保存された。 |
 
 ## 結果一覧
 
 | 実験 | 手法 | 評価内容 | 結果 | 判定 |
 | --- | --- | --- | ---: | --- |
-| Toy Color | Baseline | Test accuracy | 0.9860 | partial |
-| Toy Color | RRR | Test accuracy | 0.8080 | partial |
+| Toy Color | Baseline | Test accuracy | 0.9860 | reproduced |
+| Toy Color | RRR | Test accuracy | 0.9730 | reproduced |
 | Toy Color | Baseline | corner gradient fraction | 0.5319 | 参考 |
-| Toy Color | RRR | corner gradient fraction | 0.0006 | 良好 |
+| Toy Color | RRR | corner gradient fraction | 0.0009 | reproduced |
 | Toy Color | Baseline | top-middle gradient fraction | 0.1739 | 参考 |
-| Toy Color | RRR | top-middle gradient fraction | 0.7060 | 良好 |
+| Toy Color | RRR | top-middle gradient fraction | 0.6819 | reproduced |
 | Iris-Cancer | Baseline | Test accuracy | 0.9667 | reproduced |
 | Iris-Cancer | RRR | Test accuracy | 0.9333 | reproduced |
 | Iris-Cancer | Baseline | 350 split mean accuracy | 0.9671 ± 0.0299 | reproduced |
@@ -62,29 +72,28 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 
 - `5 x 5 x 3` の RGB toy image を使う。
 - 複数の rule で分類できる状況を作り、RRR が annotation で禁止された説明を避け、別の妥当な rule を使うかを見る。
-- 単に accuracy が高いだけでなく、入力勾配が望ましい領域へ移ることが重要である。
+- accuracy だけでなく、入力勾配が望ましい領域へ移ることが重要である。
 
 今回の結果:
 
 - Baseline accuracy: `0.9860`
-- RRR accuracy: `0.8080`
+- RRR accuracy: `0.9730`
 - Baseline corner gradient fraction: `0.5319`
-- RRR corner gradient fraction: `0.0006`
+- RRR corner gradient fraction: `0.0009`
 - Baseline top-middle gradient fraction: `0.1739`
-- RRR top-middle gradient fraction: `0.7060`
+- RRR top-middle gradient fraction: `0.6819`
+- `lambda_rrr`: `100.0`
 
 分析:
 
-- 説明の制御という観点ではかなり良い。RRR は corner への勾配をほぼゼロに抑え、top-middle へ勾配を移している。
-- これは「禁止された説明を避けて別の説明を使う」という論文の定性的主張と一致している。
-- 一方で、RRR accuracy が `0.8080` に落ちており、現在の成功条件 `rrr_high_accuracy >= 0.90` を満たしていない。
-- 原因として、`lambda_rrr=1000` が Toy Color には強すぎる、または corner を完全に抑制する annotation と現在のデータ生成が分類を難しくしすぎている可能性がある。
+- 前回は `lambda_rrr=1000.0` で RRR accuracy が `0.8080` まで低下していたが、今回は `lambda_rrr=100.0` に下げたことで `0.9730` まで回復した。
+- RRR は corner への勾配を `0.5319` から `0.0009` まで抑制している。
+- 同時に top-middle への勾配比率は `0.1739` から `0.6819` へ増えている。
+- これは「禁止された説明を避け、別の正しい説明を使う」という論文の toy experiment の主張とよく一致している。
 
 結論:
 
-- 説明制御は成功。
-- 分類性能込みの完全再現としてはまだ partial。
-- 次は `lambda_rrr` を下げる、epoch 数を増やす、または paper に近い Toy Color の annotation 設定を再確認するのがよい。
+- 再現成功。
 
 ### Iris-Cancer
 
@@ -93,7 +102,6 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 - Iris と Breast Cancer Wisconsin を結合したデータセットを使う。
 - Baseline は Iris 特徴に依存しやすく、Iris 特徴を test 時に除去すると性能が落ちる。
 - RRR は Iris 特徴への依存を抑え、Iris 特徴を除いても性能が変わりにくくなる。
-- 論文メモでは baseline accuracy 約 `92%`、Iris 除去時約 `81%` が目安である。
 
 今回の結果:
 
@@ -105,15 +113,14 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 
 分析:
 
-- Baseline は Iris 除去で `0.9671` から `0.9334` に低下しており、Iris 特徴への依存が確認できる。
+- Baseline は Iris 除去により `0.9671` から `0.9334` に低下している。
 - RRR は Iris あり `0.9328`、Iris なし `0.9330` でほぼ一致している。
-- これは「RRR により、禁止特徴を使わないモデルになる」という論文の主張と整合している。
-- 論文メモの `92% -> 81%` より baseline の低下幅は小さいが、方向性と RRR の効果は明確である。
+- 論文メモにある baseline の劣化幅よりは小さいが、方向性は一致している。
+- RRR によって Iris 特徴への依存が抑制されるという挙動は再現できている。
 
 結論:
 
-- 再現成功と判断できる。
-- 数値差の大きさまで論文に揃えるには、Iris-Cancer の行対応や split 条件をさらに厳密に確認するとよい。
+- 再現成功。
 
 ### 20 Newsgroups
 
@@ -131,17 +138,31 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 - remove_metadata: `false`
 - Baseline accuracy: `0.9442`
 - RRR accuracy: `0.9372`
+- baseline / RRR の高勾配単語 top 50 CSV が保存されている。
+
+baseline の高勾配語上位:
+
+```text
+clh, host, rutgers, nntp, athos, mail, atheism, christ, posting, christians, psuvm
+```
+
+RRR の高勾配語上位:
+
+```text
+clh, rutgers, christ, host, mail, geneva, athos, nntp, friend, posting, arrogance
+```
 
 分析:
 
-- Baseline accuracy が `0.9442` で、論文メモの約 `94%` と非常によく一致している。
-- RRR も `0.9372` で、baseline から大きく崩れていない。
-- 前回の `0.80` 台から大きく改善しており、metadata を残す前処理が論文設定に近かったと考えられる。
+- Baseline accuracy `0.9442` は論文メモの約 `94%` と非常によく一致している。
+- RRR accuracy も `0.9372` で、性能低下は小さい。
+- 高勾配語 CSV により、どの語が説明に強く寄与しているかを後から確認できるようになった。
+- ただし、上位語には `host`, `nntp`, `posting` など metadata 由来の語も含まれている。論文メモの 94% に合わせるには metadata を残す必要があるが、説明の意味解釈ではこの点に注意が必要である。
 
 結論:
 
-- 分類性能の観点では再現成功。
-- 今後は、RRR がどの単語への依存を抑制したかを、重みまたは入力勾配上位語として表に出すとさらに論文対応が明確になる。
+- 分類性能の再現は成功。
+- 説明語の分析も成果物として保存された。
 
 ### Decoy MNIST
 
@@ -161,19 +182,20 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 - RRR random swatch accuracy: `0.9823`
 - Baseline swatch gradient fraction: `0.2401`
 - RRR swatch gradient fraction: `0.000037`
+- Decoy MNIST の baseline/RRR 勾配画像が 5 枚保存されている。
 
 分析:
 
-- Baseline は swatch が相関している場合にはほぼ完全に分類できる。
-- しかし swatch をランダム化すると `0.5809` まで低下しており、decoy に依存していたことが明確である。
+- Baseline は swatch が相関している test ではほぼ完全に分類できる。
+- swatch をランダム化すると `0.5809` まで低下しており、decoy に依存していたことが明確である。
 - RRR は random swatch でも `0.9823` を維持している。
-- swatch gradient fraction も `0.2401` から `0.000037` へ大きく低下している。
-- これは、分類性能と説明の両面で RRR の効果が出ていることを示している。
+- swatch gradient fraction は `0.2401` から `0.000037` まで低下しており、説明の面でも decoy 依存が抑制されている。
+- 追加された勾配画像により、入力、swatch mask、baseline gradient、RRR gradient を視覚的に比較できる。
 
 結論:
 
 - 再現成功。
-- 今回の全実験の中で最も強い再現結果である。
+- 今回の中でも最も強い再現結果である。
 
 ### Find Another Explanation
 
@@ -196,14 +218,13 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 
 - `cutoff=0.67` が使われている。
 - Round 0 は高精度。
-- Round 1 も `0.9015` を維持しており、別の説明でもある程度分類できている。
+- Round 1 も `0.9015` を維持しており、別の説明でも分類できている。
 - Round 2 では `0.5125` まで低下している。
 - Toy Color の主要 rule を順に禁止していくと、最終的に有効な説明が尽きて性能が落ちる、という論文の挙動に近い。
 
 結論:
 
 - 再現成功。
-- 今後は、各 round の入力勾配可視化も保存するとさらに説得力が増す。
 
 ### Explanation Visualization
 
@@ -213,25 +234,24 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 
 今回の結果:
 
-- Figure: `results/figures/explanations/toy_color_gradients.png`
+- Toy Color figure: `results/figures/explanations/toy_color_gradients.png`
+- Decoy MNIST figures: `results/figures/explanations/decoy_mnist/sample_00.png ... sample_04.png`
 - Baseline accuracy: `0.9875`
 - RRR accuracy: `0.9800`
-- `figure_created: true`
 
 分析:
 
-- 図は正常に生成されている。
-- baseline と RRR の accuracy も十分高い。
-- Toy Color の説明可視化としては成功している。
+- Toy Color の可視化は正常に生成されている。
+- Decoy MNIST についても、入力、swatch mask、baseline gradient、RRR gradient の比較図が 5 枚生成された。
+- これにより、分類性能だけでなく説明制約の効果を画像として確認できる。
 
 結論:
 
 - 再現成功。
-- 次は Decoy MNIST の swatch 領域の勾配可視化を追加すると、最も重要な実験の説明面も図で示せる。
 
-## サンプル画像の出力確認
+## サンプル画像と追加分析ファイル
 
-今回の zip には、各データセット 5 枚ずつのサンプル画像が含まれている。
+今回の zip では、ユーザー要望に対応して各データセットのサンプル画像が保存されている。
 
 | データセット | 保存先 | 枚数 | 内容 |
 | --- | --- | ---: | --- |
@@ -240,36 +260,29 @@ results/figures/samples/iris_cancer/sample_00.png ... sample_04.png
 | 20 Newsgroups | `results/figures/samples/newsgroups/` | 5 | 文書テキストを画像化したもの |
 | Iris-Cancer | `results/figures/samples/iris_cancer/` | 5 | 特徴量 bar plot |
 
-この点はユーザー要望を満たしている。
+追加で以下も保存されている。
 
-## 古い雛形ファイルについて
+| ファイル | 内容 |
+| --- | --- |
+| `results/figures/explanations/decoy_mnist/sample_00.png ... sample_04.png` | Decoy MNIST の baseline/RRR 勾配比較 |
+| `results/tables/newsgroups_baseline_top_gradient_words.csv` | baseline の高勾配語 top 50 |
+| `results/tables/newsgroups_rrr_top_gradient_words.csv` | RRR の高勾配語 top 50 |
 
-以前の zip には以下の空ファイルが含まれていた。
+## 残る注意点
 
-```text
-experiments/exp001_baseline/metrics.json
-experiments/exp002_gradcam/metrics.json
-```
-
-これらは古い雛形ファイルであり、現在はリポジトリから削除済みである。
-また、`scripts/package_results.py` を使って zip を作成すると、これらの古い実験ディレクトリが残っていても成果物には含めない。
-
-## 次の改善案
-
-1. Toy Color の RRR accuracy を `0.90` 以上に戻すため、`run_synthetic.py` のデフォルト `lambda_rrr` を `100.0` に下げた。次回 Colab 実行で確認する。
-2. Toy Color について、論文の図に近い round ごとの gradient visualization を追加する。
-3. Decoy MNIST の baseline / RRR の入力勾配画像を 5 枚保存する処理を追加した。
-4. 20 Newsgroups で、baseline と RRR の高勾配単語を CSV に出す処理を追加した。
-5. zip 作成前に、古い空の `exp001_baseline` と `exp002_gradcam` を除外する `scripts/package_results.py` を追加した。
+- 20 Newsgroups の高勾配語には metadata 由来の語が多く含まれる。これは accuracy の論文再現には有利だが、説明の意味解釈では注意が必要である。
+- Iris-Cancer の baseline degradation は確認できているが、論文メモの `92% -> 81%` ほど大きくはない。
+- Find Another Explanation は挙動としては再現できているが、各 round の勾配可視化まではまだ保存していない。
 
 ## 総評
 
-今回の再実行では、前回より明確に再現度が上がった。
+今回の `results (2).zip` は、これまでで最も完成度が高い。
 
-- Iris-Cancer は 350 split 集計により再現成功と判断できる。
-- 20 Newsgroups は論文メモの約 `94%` baseline に到達した。
-- Decoy MNIST は性能と勾配の両面で非常に強い再現結果になっている。
-- Find Another Explanation も cutoff `0.67` を使った挙動として整っている。
-- Toy Color は説明制御は成功しているが、RRR accuracy が低いため partial とする。
+- 全 summary 行が `reproduced` 判定。
+- 古い雛形ファイルは zip から除外済み。
+- Toy Color は `lambda_rrr=100.0` により accuracy と説明制御の両立に成功。
+- Decoy MNIST は性能と勾配の両面で非常に強い再現結果。
+- 20 Newsgroups は論文メモの baseline `94%` に到達。
+- Iris-Cancer と Find Another Explanation も、論文の期待挙動に沿った結果が得られている。
 
-したがって、現時点では **Toy Color 以外はおおむね再現成功、Toy Color は正則化強度の調整が必要**という評価である。
+したがって、現段階では **論文内の主要実験は再現成功と言える水準に到達した** と判断する。

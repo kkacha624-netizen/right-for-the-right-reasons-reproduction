@@ -99,3 +99,58 @@ def save_text_sample_images(
         plt.close(fig)
         paths.append(str(path))
     return paths
+
+
+def save_explanation_bars(
+    path: str | Path,
+    gradient_values: np.ndarray,
+    lime_values: np.ndarray,
+    labels: list[str],
+    title: str,
+    top_k: int = 10,
+) -> None:
+    ensure_dir(Path(path).parent)
+    combined = np.abs(gradient_values) + np.abs(lime_values)
+    order = np.argsort(combined)[-top_k:][::-1]
+    x = np.arange(len(order))
+    width = 0.4
+    fig, ax = plt.subplots(figsize=(8, 3.8))
+    ax.bar(x - width / 2, gradient_values[order], width, label="input gradient")
+    ax.bar(x + width / 2, lime_values[order], width, label="local surrogate")
+    ax.set_xticks(x)
+    ax.set_xticklabels([labels[i] for i in order], rotation=45, ha="right", fontsize=8)
+    ax.set_title(title)
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(path, dpi=160)
+    plt.close(fig)
+
+
+def save_image_explanation_grid(
+    path: str | Path,
+    input_image: np.ndarray,
+    gradient_map: np.ndarray,
+    lime_map: np.ndarray,
+    title: str,
+    mask: np.ndarray | None = None,
+    cmap: str | None = None,
+) -> None:
+    images = [input_image]
+    titles = ["input"]
+    if mask is not None:
+        images.append(mask)
+        titles.append("annotation mask")
+    images.extend([np.abs(gradient_map), np.abs(lime_map)])
+    titles.extend(["input gradient", "local surrogate"])
+    ensure_dir(Path(path).parent)
+    fig, axes = plt.subplots(1, len(images), figsize=(3 * len(images), 3))
+    if len(images) == 1:
+        axes = [axes]
+    for ax, image, panel_title in zip(axes, images, titles):
+        ax.imshow(image, cmap=cmap if panel_title == "input" else "viridis")
+        ax.set_title(panel_title)
+        ax.axis("off")
+    fig.suptitle(title)
+    fig.tight_layout()
+    fig.savefig(path, dpi=160)
+    plt.close(fig)
